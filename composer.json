@@ -5,7 +5,8 @@
     "autoload": {
         "psr-4": {
             "Jeodns\\PDNSManager\\": "src/",
-            "Jeodns\\Models\\": "src/Models/"
+            "Jeodns\\Models\\": "src/Models/",
+            "Jeodns\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
@@ -32,7 +33,7 @@
     "scripts": {
         "test:types": "vendor/bin/phpstan analyze",
         "test:phpunit": "vendor/bin/phpunit",
-        "test:codestyle": "vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no",
+        "test:codestyle": "vendor/bin/php-cs-fixer fix -v",
         "test": [
             "@test:types",
             "@test:phpunit",
