@@ -36,12 +36,7 @@ class ServerManager implements IServerManager
 
     public function add(string $title, string $type, array $connectionArgs): Server
     {
-        /** @var Server|null */
-        $server = null;
-        DB::beginTransaction();
-
-        try {
-            /** @var Server */
+        return DB::transaction(function () use ($title, $type, $connectionArgs) {
             $server = Server::create([
                 'title' => $title,
                 'type' => $type,
@@ -51,50 +46,44 @@ class ServerManager implements IServerManager
 
             $this->serverConnection->verifyConnection($server->getID());
 
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();
-            throw new Exception('Can not connect to server '.$title.' with these connections args');
-        }
-
-        return $server;
+            return $server;
+        });
     }
 
     public function update(int $id, array $changes): Server
     {
-        $server = $this->getByID($id);
+        foreach ($changes as $name => $value) {
+            if (!in_array($name, ['title', 'status', 'connectionArgs'])) {
+                throw new Exception('Can not edit server parameter with name: '.$name);
+            }
+        }
 
-        DB::beginTransaction();
+        return DB::transaction(function () use ($id, $changes) {
+            $server = $this->getByID($id);
 
-        try {
             foreach ($changes as $name => $value) {
-                if (!in_array($name, ['title', 'status', 'connectionArgs'])) {
-                    throw new Exception('Can not edit server parameter with name: '.$name);
-                }
-
                 $server->$name = $value;
             }
+
+            $server->save();
 
             if (isset($changes['connectionArgs'])) {
                 $this->serverConnection->verifyConnection($server->getID());
             }
 
-            $server->save();
-        } catch (\Exception $e) {
-            DB::rollback();
-            throw new Exception('Can not connect to server '.$server->getTitle().' with these connections args');
-        }
-
-        return $server;
+            return $server;
+        });
     }
 
     public function delete(int $id): Server
     {
-        $server = $this->getByID($id);
+        return DB::transaction(function () use ($id) {
+            $server = $this->getByID($id);
 
-        $server->delete();
+            $server->delete();
 
-        return $server;
+            return $server;
+        });
     }
 
     public function reload(File $file): void

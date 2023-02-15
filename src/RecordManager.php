@@ -2,6 +2,7 @@
 
 namespace Jeodns\PDNSManager;
 
+use Illuminate\Support\Facades\DB;
 use Jeodns\Models\Record;
 use Jeodns\PDNSManager\Contracts\IRecordManager;
 use Jeodns\PDNSManager\Contracts\Record\Status;
@@ -35,22 +36,20 @@ class RecordManager implements IRecordManager
 
     public function add(int $zoneID, string $name, Type $type, int $ttl, bool $geobase, Status $status): Record
     {
-        $record = Record::create([
-            'zone_id' => $zoneID,
-            'name' => $name,
-            'type' => $type,
-            'ttl' => $ttl,
-            'geobase' => $geobase,
-            'status' => $status,
-        ]);
-
-        return $record;
+        return DB::transaction(function () use ($zoneID, $name, $type, $ttl, $geobase, $status) {
+            return Record::create([
+                'zone_id' => $zoneID,
+                'name' => $name,
+                'type' => $type,
+                'ttl' => $ttl,
+                'geobase' => $geobase,
+                'status' => $status,
+            ]);
+        });
     }
 
     public function update(int $id, array $changes = []): Record
     {
-        $record = $this->getByID($id);
-
         foreach ($changes as $name => $value) {
             switch ($name) {
                 case 'type':
@@ -58,30 +57,38 @@ class RecordManager implements IRecordManager
                     if (!($value instanceof Type)) {
                         throw new \InvalidArgumentException('record type must be typeof: '.Type::class);
                     }
-                    $record->type = $value;
                     break;
                 case 'name':
                 case 'ttl':
                 case 'geobase':
                 case 'status':
-                    $record->$name = $value;
                     break;
                 default:
                     throw new Exception('Can not edit record parameter with name: '.$name);
             }
         }
 
-        $record->save();
+        return DB::transaction(function () use ($id, $changes) {
+            $record = $this->getByID($id);
 
-        return $this->getByID($id);
+            foreach ($changes as $name => $value) {
+                $record->$name = $value;
+            }
+
+            $record->save();
+
+            return $record;
+        });
     }
 
     public function delete(int $id): Record
     {
-        $record = $this->getByID($id);
+        return DB::transaction(function () use ($id) {
+            $record = $this->getByID($id);
 
-        $record->delete();
+            $record->delete();
 
-        return $record;
+            return $record;
+        });
     }
 }
