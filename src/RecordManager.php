@@ -3,7 +3,6 @@
 namespace Jeodns\PDNSManager;
 
 use Jeodns\Models\Record;
-use Jeodns\PDNSManager\Contracts\IPowerDNSManager;
 use Jeodns\PDNSManager\Contracts\IRecordManager;
 use Jeodns\PDNSManager\Contracts\Record\Status;
 use Jeodns\PDNSManager\Contracts\Record\Type;
@@ -11,13 +10,6 @@ use Jeodns\PDNSManager\Exceptions\Exception;
 
 class RecordManager implements IRecordManager
 {
-    public IPowerDNSManager $powerDNSManager;
-
-    public function __construct(IPowerDNSManager $powerDNSManager)
-    {
-        $this->powerDNSManager = $powerDNSManager;
-    }
-
     public function getByID(int $id): Record
     {
         $record = Record::find($id);
@@ -52,11 +44,6 @@ class RecordManager implements IRecordManager
             'status' => $status,
         ]);
 
-        try {
-            $this->powerDNSManager->reloadAll();
-        } catch (Exception $e) {
-        }
-
         return $record;
     }
 
@@ -86,11 +73,6 @@ class RecordManager implements IRecordManager
 
         $record->save();
 
-        try {
-            $this->powerDNSManager->reloadAll();
-        } catch (Exception $e) {
-        }
-
         return $this->getByID($id);
     }
 
@@ -99,11 +81,6 @@ class RecordManager implements IRecordManager
         $record = $this->getByID($id);
 
         $record->delete();
-
-        try {
-            $this->powerDNSManager->reloadAll();
-        } catch (Exception $e) {
-        }
 
         return $record;
     }
