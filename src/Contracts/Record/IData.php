@@ -21,9 +21,9 @@ interface IData
 
     public function getPriority(): ?int;
 
-    public function getLocationID(): int;
+    public function getLocationID(): ?int;
 
-    public function getLocation(): ILocation;
+    public function getLocation(): ?ILocation;
 
     /**
      * @return Content

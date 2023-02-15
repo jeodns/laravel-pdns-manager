@@ -10,6 +10,10 @@ interface IRecord
 {
     public function getID(): int;
 
+    public function getZoneID(): int;
+
+    public function getZone(): IZone;
+
     public function getName(): string;
 
     public function getType(): Type;
