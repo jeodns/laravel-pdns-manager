@@ -3,20 +3,12 @@
 namespace Jeodns\PDNSManager;
 
 use Jeodns\Models\Zone;
-use Jeodns\PDNSManager\Contracts\IPowerDNSManager;
 use Jeodns\PDNSManager\Contracts\IZoneManager;
 use Jeodns\PDNSManager\Contracts\Zone\Status;
 use Jeodns\PDNSManager\Exceptions\Exception;
 
 class ZoneManager implements IZoneManager
 {
-    public IPowerDNSManager $powerDNSManager;
-
-    public function __construct(IPowerDNSManager $powerDNSManager)
-    {
-        $this->powerDNSManager = $powerDNSManager;
-    }
-
     public function getByID(int $id): Zone
     {
         $zone = Zone::find($id);
@@ -35,11 +27,6 @@ class ZoneManager implements IZoneManager
             'status' => $status,
         ]);
 
-        try {
-            $this->powerDNSManager->reloadAll();
-        } catch (Exception $e) {
-        }
-
         return $zone;
     }
 
@@ -57,11 +44,6 @@ class ZoneManager implements IZoneManager
 
         $zone->save();
 
-        try {
-            $this->powerDNSManager->reloadAll();
-        } catch (Exception $e) {
-        }
-
         return $zone;
     }
 
@@ -70,11 +52,6 @@ class ZoneManager implements IZoneManager
         $zone = $this->getByID($id);
 
         $zone->delete();
-
-        try {
-            $this->powerDNSManager->reloadAll();
-        } catch (Exception $e) {
-        }
 
         return $zone;
     }
