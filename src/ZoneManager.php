@@ -23,71 +23,43 @@ class ZoneManager implements IZoneManager
 
     public function add(string $name, Status $status): Zone
     {
-        DB::beginTransaction();
-
-        $zone = null;
-
-        try {
-            $zone = Zone::create([
+        return DB::transaction(function () use ($name, $status) {
+            return Zone::create([
                 'name' => $name,
                 'status' => $status,
             ]);
-
-            DB::commit();
-        } catch (\Throwable $t) {
-            DB::rollBack();
-
-            throw $t;
-        }
-
-        return $zone;
+        });
     }
 
     public function update(int $id, array $changes = []): Zone
     {
-        $zone = $this->getByID($id);
-
         foreach ($changes as $name => $value) {
             if (!in_array($name, ['name', 'status'])) {
                 throw new Exception('Can not edit zone parameter with name: '.$name);
             }
         }
 
-        DB::beginTransaction();
+        return DB::transaction(function () use ($id, $changes) {
+            $zone = $this->getByID($id);
 
-        try {
             foreach ($changes as $name => $value) {
                 $zone->$name = $value;
             }
 
             $zone->save();
 
-            DB::commit();
-        } catch (\Throwable $t) {
-            DB::rollBack();
-
-            throw $t;
-        }
-
-        return $zone;
+            return $zone;
+        });
     }
 
     public function delete(int $id): Zone
     {
-        $zone = $this->getByID($id);
-
-        try {
-            DB::beginTransaction();
+        return DB::transaction(function () use ($id) {
+            $zone = $this->getByID($id);
 
             $zone->delete();
 
-            DB::commit();
-        } catch (\Throwable $t) {
-            DB::rollBack();
-
-            throw $t;
-        }
-
-        return $zone;
+            return $zone;
+        });
     }
 }

@@ -36,12 +36,8 @@ class RecordManager implements IRecordManager
 
     public function add(int $zoneID, string $name, Type $type, int $ttl, bool $geobase, Status $status): Record
     {
-        DB::beginTransaction();
-
-        $record = null;
-
-        try {
-            $record = Record::create([
+        return DB::transaction(function () use ($zoneID, $name, $type, $ttl, $geobase, $status) {
+            return Record::create([
                 'zone_id' => $zoneID,
                 'name' => $name,
                 'type' => $type,
@@ -49,21 +45,11 @@ class RecordManager implements IRecordManager
                 'geobase' => $geobase,
                 'status' => $status,
             ]);
-
-            DB::commit();
-        } catch (\Throwable $t) {
-            DB::rollBack();
-
-            throw $t;
-        }
-
-        return $record;
+        });
     }
 
     public function update(int $id, array $changes = []): Record
     {
-        $record = $this->getByID($id);
-
         foreach ($changes as $name => $value) {
             switch ($name) {
                 case 'type':
@@ -82,41 +68,27 @@ class RecordManager implements IRecordManager
             }
         }
 
-        DB::beginTransaction();
+        return DB::transaction(function () use ($id, $changes) {
+            $record = $this->getByID($id);
 
-        try {
             foreach ($changes as $name => $value) {
                 $record->$name = $value;
             }
 
             $record->save();
 
-            DB::commit();
-        } catch (\Throwable $t) {
-            DB::rollBack();
-
-            throw $t;
-        }
-
-        return $this->getByID($id);
+            return $record;
+        });
     }
 
     public function delete(int $id): Record
     {
-        $record = $this->getByID($id);
+        return DB::transaction(function () use ($id) {
+            $record = $this->getByID($id);
 
-        DB::beginTransaction();
-
-        try {
             $record->delete();
 
-            DB::commit();
-        } catch (\Throwable $t) {
-            DB::rollBack();
-
-            throw $t;
-        }
-
-        return $record;
+            return $record;
+        });
     }
 }
