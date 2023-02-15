@@ -2,6 +2,7 @@
 
 namespace Jeodns\PDNSManager;
 
+use Illuminate\Support\Facades\DB;
 use Jeodns\Models\Zone;
 use Jeodns\PDNSManager\Contracts\IZoneManager;
 use Jeodns\PDNSManager\Contracts\Zone\Status;
@@ -22,10 +23,22 @@ class ZoneManager implements IZoneManager
 
     public function add(string $name, Status $status): Zone
     {
-        $zone = Zone::create([
-            'name' => $name,
-            'status' => $status,
-        ]);
+        DB::beginTransaction();
+
+        $zone = null;
+
+        try {
+            $zone = Zone::create([
+                'name' => $name,
+                'status' => $status,
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $t) {
+            DB::rollBack();
+
+            throw $t;
+        }
 
         return $zone;
     }
@@ -38,11 +51,23 @@ class ZoneManager implements IZoneManager
             if (!in_array($name, ['name', 'status'])) {
                 throw new Exception('Can not edit zone parameter with name: '.$name);
             }
-
-            $zone->$name = $value;
         }
 
-        $zone->save();
+        DB::beginTransaction();
+
+        try {
+            foreach ($changes as $name => $value) {
+                $zone->$name = $value;
+            }
+
+            $zone->save();
+
+            DB::commit();
+        } catch (\Throwable $t) {
+            DB::rollBack();
+
+            throw $t;
+        }
 
         return $zone;
     }
@@ -51,7 +76,17 @@ class ZoneManager implements IZoneManager
     {
         $zone = $this->getByID($id);
 
-        $zone->delete();
+        try {
+            DB::beginTransaction();
+
+            $zone->delete();
+
+            DB::commit();
+        } catch (\Throwable $t) {
+            DB::rollBack();
+
+            throw $t;
+        }
 
         return $zone;
     }

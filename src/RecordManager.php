@@ -2,6 +2,7 @@
 
 namespace Jeodns\PDNSManager;
 
+use Illuminate\Support\Facades\DB;
 use Jeodns\Models\Record;
 use Jeodns\PDNSManager\Contracts\IRecordManager;
 use Jeodns\PDNSManager\Contracts\Record\Status;
@@ -35,14 +36,26 @@ class RecordManager implements IRecordManager
 
     public function add(int $zoneID, string $name, Type $type, int $ttl, bool $geobase, Status $status): Record
     {
-        $record = Record::create([
-            'zone_id' => $zoneID,
-            'name' => $name,
-            'type' => $type,
-            'ttl' => $ttl,
-            'geobase' => $geobase,
-            'status' => $status,
-        ]);
+        DB::beginTransaction();
+
+        $record = null;
+
+        try {
+            $record = Record::create([
+                'zone_id' => $zoneID,
+                'name' => $name,
+                'type' => $type,
+                'ttl' => $ttl,
+                'geobase' => $geobase,
+                'status' => $status,
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $t) {
+            DB::rollBack();
+
+            throw $t;
+        }
 
         return $record;
     }
@@ -58,20 +71,32 @@ class RecordManager implements IRecordManager
                     if (!($value instanceof Type)) {
                         throw new \InvalidArgumentException('record type must be typeof: '.Type::class);
                     }
-                    $record->type = $value;
                     break;
                 case 'name':
                 case 'ttl':
                 case 'geobase':
                 case 'status':
-                    $record->$name = $value;
                     break;
                 default:
                     throw new Exception('Can not edit record parameter with name: '.$name);
             }
         }
 
-        $record->save();
+        DB::beginTransaction();
+
+        try {
+            foreach ($changes as $name => $value) {
+                $record->$name = $value;
+            }
+
+            $record->save();
+
+            DB::commit();
+        } catch (\Throwable $t) {
+            DB::rollBack();
+
+            throw $t;
+        }
 
         return $this->getByID($id);
     }
@@ -80,7 +105,17 @@ class RecordManager implements IRecordManager
     {
         $record = $this->getByID($id);
 
-        $record->delete();
+        DB::beginTransaction();
+
+        try {
+            $record->delete();
+
+            DB::commit();
+        } catch (\Throwable $t) {
+            DB::rollBack();
+
+            throw $t;
+        }
 
         return $record;
     }

@@ -52,7 +52,7 @@ class ServerManager implements IServerManager
             $this->serverConnection->verifyConnection($server->getID());
 
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollback();
             throw new Exception('Can not connect to server '.$title.' with these connections args');
         }
@@ -80,7 +80,7 @@ class ServerManager implements IServerManager
             }
 
             $server->save();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollback();
             throw new Exception('Can not connect to server '.$server->getTitle().' with these connections args');
         }
@@ -92,7 +92,15 @@ class ServerManager implements IServerManager
     {
         $server = $this->getByID($id);
 
-        $server->delete();
+        DB::beginTransaction();
+
+        try {
+            $server->delete();
+        } catch (\Throwable $t) {
+            DB::rollback();
+
+            throw $t;
+        }
 
         return $server;
     }
