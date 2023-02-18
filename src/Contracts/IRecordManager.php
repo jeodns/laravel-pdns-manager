@@ -14,7 +14,7 @@ interface IRecordManager
     public function add(int $zoneID, string $name, Type $type, int $ttl, bool $geobase, Status $status): IRecord;
 
     /**
-     * @param array{ttl?:int,geobase?:bool,status?:Status} $changes
+     * @param array{type?:Type,name?:string,ttl?:int,geobase?:bool,status?:Status} $changes
      */
     public function update(int $id, array $changes): IRecord;
 
