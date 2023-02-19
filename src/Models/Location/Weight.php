@@ -4,9 +4,9 @@ namespace Jeodns\Models\Location;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Jeodns\LocationSelector\Contracts\ILocation;
-use Jeodns\LocationSelector\Contracts\IWeight;
 use Jeodns\Models\Location;
+use Jeodns\PDNSManager\Contracts\ILocation;
+use Jeodns\PDNSManager\Contracts\Location\IWeight;
 
 /**
  * @property int   $id

@@ -19,8 +19,6 @@
     "require": {
         "php": "^8.1",
         "ext-yaml": "^2.2.2",
-        "jeodns/wonder-network": "@dev",
-        "jeodns/location-selector": "@dev",
         "dnj/local-filesystem": "^1.0"
     },
     "require-dev": {
@@ -46,15 +44,5 @@
                 "Jeodns\\PDNSManager\\ServiceProvider"
             ]
         }
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../wonder-network"
-        },
-        {
-            "type": "path",
-            "url": "../location-selector"
-        }
-    ]
+    }
 }

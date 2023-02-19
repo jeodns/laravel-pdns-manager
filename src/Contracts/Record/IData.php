@@ -2,7 +2,7 @@
 
 namespace Jeodns\PDNSManager\Contracts\Record;
 
-use Jeodns\LocationSelector\Contracts\ILocation;
+use Jeodns\PDNSManager\Contracts\ILocation;
 use Jeodns\PDNSManager\Contracts\IRecord;
 use Jeodns\PDNSManager\Contracts\Record\Data\Status;
 

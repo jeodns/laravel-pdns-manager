@@ -4,9 +4,9 @@ namespace Jeodns\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Jeodns\LocationSelector\Contracts\Continent;
-use Jeodns\LocationSelector\Contracts\ILocation;
 use Jeodns\Models\Location\Weight;
+use Jeodns\PDNSManager\Contracts\ILocation;
+use Jeodns\PDNSManager\Contracts\Location\Continent;
 use Jeodns\PDNSManager\Exceptions\Exception;
 
 /**
