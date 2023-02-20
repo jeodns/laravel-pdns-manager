@@ -2,7 +2,6 @@
 
 namespace Jeodns\PDNSManager\Contracts;
 
-use dnj\Filesystem\Local\File;
 use Jeodns\PDNSManager\Contracts\Server\Status;
 
 /**
@@ -23,6 +22,4 @@ interface IServerManager
     public function update(int $id, array $changes): IServer;
 
     public function delete(int $id): IServer;
-
-    public function reload(File $file): void;
 }

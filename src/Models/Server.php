@@ -2,7 +2,9 @@
 
 namespace Jeodns\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Jeodns\Database\Factories\ServerFactory;
 use Jeodns\PDNSManager\Contracts\IServer;
 use Jeodns\PDNSManager\Contracts\Server\Status;
 
@@ -16,6 +18,13 @@ use Jeodns\PDNSManager\Contracts\Server\Status;
  */
 class Server extends Model implements IServer
 {
+    use HasFactory;
+
+    protected static function newFactory(): ServerFactory
+    {
+        return ServerFactory::new();
+    }
+
     /**
      * @var string
      */

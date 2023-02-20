@@ -6,7 +6,8 @@
         "psr-4": {
             "Jeodns\\PDNSManager\\": "src/",
             "Jeodns\\Models\\": "src/Models/",
-            "Jeodns\\Database\\Factories\\": "database/factories/"
+            "Jeodns\\Database\\Factories\\": "database/factories/",
+            "Jeodns\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
