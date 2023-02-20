@@ -3,10 +3,10 @@
 namespace Jeodns\PDNSManager;
 
 use Illuminate\Support\Facades\DB;
-use Jeodns\Models\Zone;
 use Jeodns\PDNSManager\Contracts\IZoneManager;
 use Jeodns\PDNSManager\Contracts\Zone\Status;
 use Jeodns\PDNSManager\Exceptions\Exception;
+use Jeodns\PDNSManager\Models\Zone;
 
 class ZoneManager implements IZoneManager
 {

@@ -2,12 +2,12 @@
 
 namespace Jeodns\PDNSManager\Tests\Feature;
 
-use Jeodns\Models\Record;
-use Jeodns\Models\Zone;
 use Jeodns\PDNSManager\Contracts\IRecordManager;
 use Jeodns\PDNSManager\Contracts\Record\Status;
 use Jeodns\PDNSManager\Contracts\Record\Type;
 use Jeodns\PDNSManager\Exceptions\Exception;
+use Jeodns\PDNSManager\Models\Record;
+use Jeodns\PDNSManager\Models\Zone;
 use Jeodns\PDNSManager\RecordManager;
 use Jeodns\PDNSManager\Tests\TestCase;
 

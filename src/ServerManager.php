@@ -3,12 +3,12 @@
 namespace Jeodns\PDNSManager;
 
 use Illuminate\Support\Facades\DB;
-use Jeodns\Models\Server;
 use Jeodns\PDNSManager\Contracts\IServer;
 use Jeodns\PDNSManager\Contracts\IServerConnection;
 use Jeodns\PDNSManager\Contracts\IServerManager;
 use Jeodns\PDNSManager\Contracts\Server\Status;
 use Jeodns\PDNSManager\Exceptions\Exception;
+use Jeodns\PDNSManager\Models\Server;
 
 /**
  * @phpstan-import-type ConnectionArgs from IServer

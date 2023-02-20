@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jeodns_servers', function (Blueprint $table) {
+        Schema::create('pdns_servers', function (Blueprint $table) {
             $table->id();
 
             $table->string('title', 100);
@@ -41,6 +41,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jeodns_servers');
+        Schema::dropIfExists('pdns_servers');
     }
 };

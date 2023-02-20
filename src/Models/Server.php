@@ -1,6 +1,6 @@
 <?php
 
-namespace Jeodns\Models;
+namespace Jeodns\PDNSManager\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +28,7 @@ class Server extends Model implements IServer
     /**
      * @var string
      */
-    protected $table = 'jeodns_servers';
+    protected $table = 'pdns_servers';
 
     /**
      * @var string[]

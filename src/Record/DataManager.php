@@ -3,10 +3,10 @@
 namespace Jeodns\PDNSManager\Record;
 
 use Illuminate\Support\Facades\DB;
-use Jeodns\Models\Record\Data;
 use Jeodns\PDNSManager\Contracts\Record\Data\Status;
 use Jeodns\PDNSManager\Contracts\Record\IDataManager;
 use Jeodns\PDNSManager\Exceptions\Exception;
+use Jeodns\PDNSManager\Models\Record\Data;
 
 class DataManager implements IDataManager
 {

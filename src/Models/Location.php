@@ -1,6 +1,6 @@
 <?php
 
-namespace Jeodns\Models;
+namespace Jeodns\PDNSManager\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Jeodns\PDNSManager\Contracts\ILocation;
@@ -17,7 +17,7 @@ class Location extends Model implements ILocation
     /**
      * @var string
      */
-    protected $table = 'jeodns_locations';
+    protected $table = 'pdns_locations';
 
     /**
      * @var string[]

@@ -2,7 +2,7 @@
 
 namespace Jeodns\Database\Factories;
  
-use Jeodns\Models\Zone;
+use Jeodns\PDNSManager\Models\Zone;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Jeodns\PDNSManager\Contracts\Zone\Status;
 use Illuminate\Support\Str;

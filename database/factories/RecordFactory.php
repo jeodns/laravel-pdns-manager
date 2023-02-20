@@ -2,8 +2,8 @@
 
 namespace Jeodns\Database\Factories;
  
-use Jeodns\Models\Zone;
-use Jeodns\Models\Record;
+use Jeodns\PDNSManager\Models\Zone;
+use Jeodns\PDNSManager\Models\Record;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Jeodns\PDNSManager\Contracts\Record\Status;

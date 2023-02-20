@@ -2,10 +2,10 @@
 
 namespace Jeodns\PDNSManager\Tests\Feature;
 
-use Jeodns\Models\Server;
 use Jeodns\PDNSManager\Contracts\IServerConnection;
 use Jeodns\PDNSManager\Contracts\IServerManager;
 use Jeodns\PDNSManager\Exceptions\Exception;
+use Jeodns\PDNSManager\Models\Server;
 use Jeodns\PDNSManager\ServerManager;
 use Jeodns\PDNSManager\Tests\TestCase;
 
