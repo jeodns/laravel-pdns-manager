@@ -8,6 +8,7 @@ use Jeodns\PDNSManager\Contracts\IRecordManager;
 use Jeodns\PDNSManager\Contracts\IServerManager;
 use Jeodns\PDNSManager\Contracts\IZoneManager;
 use Jeodns\PDNSManager\Contracts\Record\IDataManager;
+use Jeodns\PDNSManager\Console\Commands\DatabaseSeederCommand;
 
 class ServiceProvider extends ParentServiceProvider
 {
@@ -23,5 +24,11 @@ class ServiceProvider extends ParentServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                DatabaseSeederCommand::class,
+            ]);
+        }
     }
 }
