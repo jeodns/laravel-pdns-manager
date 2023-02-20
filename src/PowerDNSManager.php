@@ -3,10 +3,6 @@
 namespace Jeodns\PDNSManager;
 
 use dnj\Filesystem\Local\File;
-use Jeodns\Models\Record;
-use Jeodns\Models\Record\Data;
-use Jeodns\Models\Server;
-use Jeodns\Models\Zone;
 use Jeodns\PDNSManager\Contracts\IPowerDNSManager;
 use Jeodns\PDNSManager\Contracts\IRecordManager;
 use Jeodns\PDNSManager\Contracts\IServerConnection;
@@ -19,6 +15,10 @@ use Jeodns\PDNSManager\Contracts\Record\Status as RecordStatus;
 use Jeodns\PDNSManager\Contracts\Record\Type;
 use Jeodns\PDNSManager\Contracts\Server\Status as ServerStatus;
 use Jeodns\PDNSManager\Contracts\Zone\Status as ZoneStatus;
+use Jeodns\PDNSManager\Models\Record;
+use Jeodns\PDNSManager\Models\Record\Data;
+use Jeodns\PDNSManager\Models\Server;
+use Jeodns\PDNSManager\Models\Zone;
 
 /**
  * @phpstan-import-type Content from IData

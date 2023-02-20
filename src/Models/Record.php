@@ -1,6 +1,6 @@
 <?php
 
-namespace Jeodns\Models;
+namespace Jeodns\PDNSManager\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -43,7 +43,7 @@ class Record extends Model implements IRecord
     /**
      * @var string
      */
-    protected $table = 'jeodns_records';
+    protected $table = 'pdns_records';
 
     /**
      * @var string[]

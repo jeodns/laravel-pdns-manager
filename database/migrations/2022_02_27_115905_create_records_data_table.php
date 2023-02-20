@@ -3,8 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Jeodns\Models\Record;
-use Jeodns\Models\Location;
+use Jeodns\PDNSManager\Models\Record;
+use Jeodns\PDNSManager\Models\Location;
 
 return new class extends Migration
 {
@@ -15,11 +15,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jeodns_records_data', function (Blueprint $table) {
+        Schema::create('pdns_records_data', function (Blueprint $table) {
             $table->id();
 
             $table->foreignIdFor(Record::class, 'record_id')
-                ->constrained("jeodns_records")
+                ->constrained("pdns_records")
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
@@ -29,7 +29,7 @@ return new class extends Migration
 
             $table->foreignIdFor(Location::class, 'location_id')
                 ->nullable()
-                ->constrained("jeodns_locations")
+                ->constrained("pdns_locations")
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             
@@ -46,6 +46,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jeodns_records_data');
+        Schema::dropIfExists('pdns_records_data');
     }
 };

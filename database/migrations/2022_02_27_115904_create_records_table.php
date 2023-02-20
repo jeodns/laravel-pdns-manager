@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Jeodns\Models\Zone;
+use Jeodns\PDNSManager\Models\Zone;
 
 return new class extends Migration
 {
@@ -14,12 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jeodns_records', function (Blueprint $table) {
+        Schema::create('pdns_records', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         
             $table->foreignIdFor(Zone::class, 'zone_id')
-                ->constrained("jeodns_zones")
+                ->constrained("pdns_zones")
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
     
@@ -40,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jeodns_records');
+        Schema::dropIfExists('pdns_records');
     }
 };

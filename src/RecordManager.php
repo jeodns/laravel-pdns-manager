@@ -3,11 +3,11 @@
 namespace Jeodns\PDNSManager;
 
 use Illuminate\Support\Facades\DB;
-use Jeodns\Models\Record;
 use Jeodns\PDNSManager\Contracts\IRecordManager;
 use Jeodns\PDNSManager\Contracts\Record\Status;
 use Jeodns\PDNSManager\Contracts\Record\Type;
 use Jeodns\PDNSManager\Exceptions\Exception;
+use Jeodns\PDNSManager\Models\Record;
 
 class RecordManager implements IRecordManager
 {

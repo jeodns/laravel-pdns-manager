@@ -2,15 +2,15 @@
 
 namespace Jeodns\PDNSManager\Tests\Feature;
 
-use Jeodns\Models\Record;
-use Jeodns\Models\Record\Data;
-use Jeodns\Models\Server;
-use Jeodns\Models\Zone;
 use Jeodns\PDNSManager\Contracts\IPowerDNSManager;
 use Jeodns\PDNSManager\Contracts\IRecordManager;
 use Jeodns\PDNSManager\Contracts\IServerConnection;
 use Jeodns\PDNSManager\Contracts\IZoneManager;
 use Jeodns\PDNSManager\Contracts\Record\IDataManager;
+use Jeodns\PDNSManager\Models\Record;
+use Jeodns\PDNSManager\Models\Record\Data;
+use Jeodns\PDNSManager\Models\Server;
+use Jeodns\PDNSManager\Models\Zone;
 use Jeodns\PDNSManager\PowerDNSManager;
 use Jeodns\PDNSManager\Tests\TestCase;
 

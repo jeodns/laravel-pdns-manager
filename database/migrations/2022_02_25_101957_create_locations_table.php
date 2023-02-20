@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jeodns_locations', function (Blueprint $table) {
+        Schema::create('pdns_locations', function (Blueprint $table) {
             $table->id();
             $table->unsignedTinyInteger("continent");
             $table->string("country", 2)
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jeodns_locations');
+        Schema::dropIfExists('pdns_locations');
     }
 };

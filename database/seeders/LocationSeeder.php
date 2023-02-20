@@ -3,7 +3,7 @@
 namespace Jeodns\Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
-use Jeodns\Models\Location;
+use Jeodns\PDNSManager\Models\Location;
 use Jeodns\PDNSManager\Contracts\Location\Continent;
 use Illuminate\Database\Seeder;
 

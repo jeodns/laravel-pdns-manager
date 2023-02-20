@@ -1,16 +1,16 @@
 <?php
 
-namespace Jeodns\Models\Record;
+namespace Jeodns\PDNSManager\Models\Record;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Jeodns\Database\Factories\Record\DataFactory;
-use Jeodns\Models\Record;
 use Jeodns\PDNSManager\Contracts\ILocation;
 use Jeodns\PDNSManager\Contracts\IRecord;
 use Jeodns\PDNSManager\Contracts\Record\Data\Status;
 use Jeodns\PDNSManager\Contracts\Record\IData;
+use Jeodns\PDNSManager\Models\Record;
 
 /**
  * @phpstan-import-type Content from IData
@@ -38,7 +38,7 @@ class Data extends Model implements IData
     /**
      * @var string
      */
-    protected $table = 'jeodns_records_data';
+    protected $table = 'pdns_records_data';
 
     /**
      * @var string[]

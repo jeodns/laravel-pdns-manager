@@ -1,6 +1,6 @@
 <?php
 
-namespace Jeodns\Models;
+namespace Jeodns\PDNSManager\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +24,7 @@ class Zone extends Model implements IZone
     /**
      * @var string
      */
-    protected $table = 'jeodns_zones';
+    protected $table = 'pdns_zones';
 
     /**
      * @var string[]
