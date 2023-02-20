@@ -3,12 +3,12 @@
 namespace Jeodns\PDNSManager;
 
 use Illuminate\Support\ServiceProvider as ParentServiceProvider;
+use Jeodns\PDNSManager\Console\Commands\DatabaseSeederCommand;
 use Jeodns\PDNSManager\Contracts\IPowerDNSManager;
 use Jeodns\PDNSManager\Contracts\IRecordManager;
 use Jeodns\PDNSManager\Contracts\IServerManager;
 use Jeodns\PDNSManager\Contracts\IZoneManager;
 use Jeodns\PDNSManager\Contracts\Record\IDataManager;
-use Jeodns\PDNSManager\Console\Commands\DatabaseSeederCommand;
 
 class ServiceProvider extends ParentServiceProvider
 {
