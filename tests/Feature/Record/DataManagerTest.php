@@ -39,7 +39,7 @@ class DataManagerTest extends TestCase
             $data->getWeight() == $dataCopy->getWeight() and
             $data->getPriority() == $dataCopy->getPriority() and
             $data->getLocationID() == $dataCopy->getLocationID() and
-            $data->getLocationID() == $dataCopy->getLocationID() and
+            $data->getLocation() == $dataCopy->getLocation() and
             $data->getStatus() == $dataCopy->getStatus()
         );
     }

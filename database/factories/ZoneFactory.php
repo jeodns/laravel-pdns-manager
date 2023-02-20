@@ -24,7 +24,7 @@ class ZoneFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'domain.com',
+            'name' => Str::random(9).'.com',
 			'status' => Status::ACTIVE,
         ];
     }

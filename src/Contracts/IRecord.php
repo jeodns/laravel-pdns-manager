@@ -2,7 +2,7 @@
 
 namespace Jeodns\PDNSManager\Contracts;
 
-use Jeodns\PDNSManager\Contracts\Record\IData;
+use Illuminate\Database\Eloquent\Collection;
 use Jeodns\PDNSManager\Contracts\Record\Status;
 use Jeodns\PDNSManager\Contracts\Record\Type;
 
@@ -24,8 +24,5 @@ interface IRecord
 
     public function getStatus(): Status;
 
-    /**
-     * @return IData[]
-     */
-    public function getData(): array;
+    public function getData(): Collection;
 }

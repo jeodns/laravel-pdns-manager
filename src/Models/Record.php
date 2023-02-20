@@ -2,6 +2,7 @@
 
 namespace Jeodns\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Jeodns\Database\Factories\RecordFactory;
 use Jeodns\PDNSManager\Contracts\IRecord;
 use Jeodns\PDNSManager\Contracts\IZone;
-use Jeodns\PDNSManager\Contracts\Record\IData;
 use Jeodns\PDNSManager\Contracts\Record\Status;
 use Jeodns\PDNSManager\Contracts\Record\Type;
 
@@ -105,9 +105,8 @@ class Record extends Model implements IRecord
         return $this->status;
     }
 
-    public function getData(): array
+    public function getData(): Collection
     {
-        /** @var IData[] */
         return $this->data;
     }
 }

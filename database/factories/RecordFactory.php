@@ -27,7 +27,7 @@ class RecordFactory extends Factory
     {
         return [
             'zone_id' => Zone::factory()->create()->getID(),
-            'name' => Str::random(3).'.domain.com',
+            'name' => Str::random(3),
             'type' => Type::A,
             'ttl' => 30,
             'geobase' => false,

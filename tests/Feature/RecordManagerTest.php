@@ -40,6 +40,7 @@ class RecordManagerTest extends TestCase
             $record->getType() == $recordCopy->getType() and
             $record->getTTL() == $recordCopy->getTTL() and
             $record->isGeobase() == $recordCopy->isGeobase() and
+            $record->getData() == $recordCopy->getData() and
             $record->getStatus() == $recordCopy->getStatus()
         );
     }
