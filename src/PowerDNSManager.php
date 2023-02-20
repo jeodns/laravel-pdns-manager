@@ -120,8 +120,10 @@ class PowerDNSManager implements IPowerDNSManager
         $query = Server::where('status', ServerStatus::ACTIVE);
         $servers = $query->get();
 
+        $file = $this->generateConfigYaml();
+
         foreach ($servers as $server) {
-            $this->serverConnection->reload($server->getID(), $this->generateConfigYaml());
+            $this->serverConnection->reload($server->getID(), $file);
         }
     }
 

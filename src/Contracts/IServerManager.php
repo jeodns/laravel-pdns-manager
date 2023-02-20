@@ -13,6 +13,7 @@ interface IServerManager
     public function getByID(int $id): IServer;
 
     /**
+     * @param class-string   $type
      * @param ConnectionArgs $connectionArgs
      */
     public function add(string $title, string $type, array $connectionArgs): IServer;
