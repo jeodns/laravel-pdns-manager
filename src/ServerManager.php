@@ -2,7 +2,6 @@
 
 namespace Jeodns\PDNSManager;
 
-use dnj\Filesystem\Local\File;
 use Illuminate\Support\Facades\DB;
 use Jeodns\Models\Server;
 use Jeodns\PDNSManager\Contracts\IServer;
@@ -84,15 +83,5 @@ class ServerManager implements IServerManager
 
             return $server;
         });
-    }
-
-    public function reload(File $file): void
-    {
-        $query = Server::where('status', Status::ACTIVE);
-        $servers = $query->get();
-
-        foreach ($servers as $server) {
-            $this->serverConnection->reload($server->getID(), $file);
-        }
     }
 }

@@ -1,3 +1,9 @@
-storage
-.php-cs-fixer.cache
-vendor
+/storage
+/coverage
+/vendor
+/.phpunit.cache
+/junit.xml
+/.php-cs-fixer.cache
+/.phpunit.result.cache
+/.phpunit.cache
+/.idea

@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string("type", 10);
             $table->unsignedInteger("ttl");
             $table->boolean("geobase");
-            $table->unsignedTinyInteger("strategy");
             $table->unsignedTinyInteger("status");
 
             $table->unique(['name', 'type']);

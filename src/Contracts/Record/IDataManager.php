@@ -14,7 +14,7 @@ interface IDataManager
     /**
      * @param Content $content
      */
-    public function add(int $recordID, int $weight, int $priority, int $locationID, array $content, Status $status): IData;
+    public function add(int $recordID, array $content, Status $status, ?int $weight, ?int $priority, ?int $locationID): IData;
 
     /**
      * @param array{weight?:int,priority?:int,location_id?:int,content?:Content,status?:Status} $changes

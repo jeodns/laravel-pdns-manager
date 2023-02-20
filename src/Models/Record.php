@@ -2,15 +2,21 @@
 
 namespace Jeodns\Models;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Jeodns\Database\Factories\RecordFactory;
 use Jeodns\PDNSManager\Contracts\IRecord;
-use Jeodns\PDNSManager\Contracts\Record\IData;
+use Jeodns\PDNSManager\Contracts\IZone;
 use Jeodns\PDNSManager\Contracts\Record\Status;
 use Jeodns\PDNSManager\Contracts\Record\Type;
 
 /**
  * @property int    $id
+ * @property int    $zone_id
+ * @property IZone  $zone
  * @property string $name
  * @property Type   $type
  * @property int    $ttl
@@ -19,6 +25,21 @@ use Jeodns\PDNSManager\Contracts\Record\Type;
  */
 class Record extends Model implements IRecord
 {
+    use HasFactory;
+
+    protected static function newFactory(): RecordFactory
+    {
+        return RecordFactory::new();
+    }
+
+    /**
+     * @return BelongsTo<Zone,Record>;
+     */
+    public function zone()
+    {
+        return $this->belongsTo(Zone::class);
+    }
+
     /**
      * @var string
      */
@@ -27,7 +48,7 @@ class Record extends Model implements IRecord
     /**
      * @var string[]
      */
-    protected $fillable = ['name', 'type', 'ttl', 'geobase', 'status'];
+    protected $fillable = ['zone_id', 'name', 'type', 'ttl', 'geobase', 'status'];
 
     protected $casts = [
         'status' => Status::class,
@@ -46,6 +67,17 @@ class Record extends Model implements IRecord
     public function getID(): int
     {
         return $this->id;
+    }
+
+    public function getZoneID(): int
+    {
+        return $this->zone_id;
+    }
+
+    public function getZone(): IZone
+    {
+        /** @var IZone */
+        return $this->zone;
     }
 
     public function getName(): string
@@ -73,9 +105,8 @@ class Record extends Model implements IRecord
         return $this->status;
     }
 
-    public function getData(): array
+    public function getData(): Collection
     {
-        /** @var IData[] */
         return $this->data;
     }
 }

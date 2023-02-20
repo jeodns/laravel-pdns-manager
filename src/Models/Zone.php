@@ -2,7 +2,9 @@
 
 namespace Jeodns\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Jeodns\Database\Factories\ZoneFactory;
 use Jeodns\PDNSManager\Contracts\IZone;
 use Jeodns\PDNSManager\Contracts\Zone\Status;
 
@@ -12,6 +14,13 @@ use Jeodns\PDNSManager\Contracts\Zone\Status;
  */
 class Zone extends Model implements IZone
 {
+    use HasFactory;
+
+    protected static function newFactory(): ZoneFactory
+    {
+        return ZoneFactory::new();
+    }
+
     /**
      * @var string
      */

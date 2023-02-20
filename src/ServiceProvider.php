@@ -3,6 +3,7 @@
 namespace Jeodns\PDNSManager;
 
 use Illuminate\Support\ServiceProvider as ParentServiceProvider;
+use Jeodns\PDNSManager\Console\Commands\DatabaseSeederCommand;
 use Jeodns\PDNSManager\Contracts\IPowerDNSManager;
 use Jeodns\PDNSManager\Contracts\IRecordManager;
 use Jeodns\PDNSManager\Contracts\IServerManager;
@@ -23,5 +24,11 @@ class ServiceProvider extends ParentServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                DatabaseSeederCommand::class,
+            ]);
+        }
     }
 }
