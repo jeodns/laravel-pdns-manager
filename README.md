@@ -49,7 +49,7 @@ $zoneManager = app(IZoneManager::class);
 
 $zone = $zoneManager->add(
   name: 'domain.com',
-  status: Status::ATIVE,
+  status: Status::ACTIVE,
 );
 
 ```
@@ -86,7 +86,7 @@ $zoneManager = app(IZoneManager::class);
 $zone = $zoneManager->update(
   id: 1,
   changes: [
-    'title' => 'new-domain.com',
+    'name' => 'new-domain.com',
     'status' => Status::DEACTIVE,
   ],
 );
@@ -151,10 +151,10 @@ use Jeodns\PDNSManager\IRecordManager;
 $recordManager = app(IRecordManager::class);
 
 /**
- * @param  int id
+ * @param  int $id
  * @return IRecord
  */
-$record = $record->getByID(id:1);
+$record = $recordManager->getByID(id:1);
 
 ```
 
@@ -173,7 +173,7 @@ $recordManager = app(IRecordManager::class);
  * @param  array{type?:Type,name?:string,ttl?:int,geobase?:bool,status?:Status} $changes
  * @return IRecord
  */
-$record = $record->update(
+$record = $recordManager->update(
   id: 1,
   changes: [
     'type' => Type::A,
@@ -346,15 +346,18 @@ Reload server Config Zone file:
 ***
 
 ```php
+use dnj\Filesystem\Local\File;
+use Jeodns\PDNSManager\Contracts\IPowerDNSManager;
 use Jeodns\PDNSManager\Contracts\IServerManager;
 
 $serverManager = app(IServerManager::class);
+$powerDNSManager = app(IPowerDNSManager::class);
 
 /**
- * @param  int  $id
+ * @param  File  $file
  * @return void
  */
-$serverManager->reload(file: $file);
+$serverManager->reload(file: $powerDNSManager->generateConfigYaml());
 
 ```
 
