@@ -15,13 +15,13 @@ use Jeodns\PDNSManager\Models\Record;
 /**
  * @phpstan-import-type Content from IData
  *
- * @property int     $id
- * @property int     $record_id
- * @property int     $weight
- * @property int     $priority
- * @property int     $location_id
- * @property Content $content
- * @property Status  $status
+ * @property int      $id
+ * @property int      $record_id
+ * @property int|null $weight
+ * @property int|null $priority
+ * @property int|null $location_id
+ * @property Content  $content
+ * @property Status   $status
  */
 class Data extends Model implements IData
 {

@@ -16,8 +16,8 @@ class RecordManagerTest extends TestCase
     public function testCreate(): void
     {
         $record = $this->getManager()->add(
-            zoneID: Zone::factory()->create()->getID(),
-            name: 'ns1.domain.com',
+            zoneID: Zone::factory()->create(['name' => 'domain.com'])->getID(),
+            name: 'domain.com.',
             type: Type::A,
             ttl: 30,
             geobase: false,
@@ -73,6 +73,7 @@ class RecordManagerTest extends TestCase
         $updatedRecord = $this->getManager()->update(
             id: $record->getID(),
             changes: [
+                'name' => 'ns1.'.$record->getZone()->getName().'.',
                 'ttl' => 60,
                 'type' => Type::AAAA,
                 'geobase' => true,
@@ -88,7 +89,63 @@ class RecordManagerTest extends TestCase
         );
     }
 
-    public function testUpdateWithException(): void
+    public function testUpdateWithTypeException(): void
+    {
+        $this->expectException(Exception::class);
+
+        $record = Record::factory()->create();
+
+        $updatedRecord = $this->getManager()->update(
+            id: $record->getID(),
+            changes: [
+                'type' => 'hi',
+            ],
+        );
+    }
+
+    public function testUpdateWithTTLException(): void
+    {
+        $this->expectException(Exception::class);
+
+        $record = Record::factory()->create();
+
+        $updatedRecord = $this->getManager()->update(
+            id: $record->getID(),
+            changes: [
+                'ttl' => -1,
+            ],
+        );
+    }
+
+    public function testUpdateWithNameException(): void
+    {
+        $this->expectException(Exception::class);
+
+        $record = Record::factory()->create();
+
+        $updatedRecord = $this->getManager()->update(
+            id: $record->getID(),
+            changes: [
+                'name' => 'ns1.domain.co.',
+            ],
+        );
+    }
+
+    public function testUpdateInvalidNameException(): void
+    {
+        $this->expectException(Exception::class);
+
+        $record = Record::factory()->create();
+
+        $updatedRecord = $this->getManager()->update(
+            id: $record->getID(),
+            changes: [
+                'name' => 'ns1.',
+            ],
+        );
+    }
+
+    public function testUpdateWithWrongChangeParameterException(): void
     {
         $this->expectException(Exception::class);
 
@@ -98,20 +155,6 @@ class RecordManagerTest extends TestCase
             id: $record->getID(),
             changes: [
                 'domain' => 'newdomain.com',
-            ],
-        );
-    }
-
-    public function testUpdateWithInvalidArgumentException(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $record = Record::factory()->create();
-
-        $updatedRecord = $this->getManager()->update(
-            id: $record->getID(),
-            changes: [
-                'type' => 'hi',
             ],
         );
     }

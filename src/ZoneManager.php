@@ -23,19 +23,32 @@ class ZoneManager implements IZoneManager
 
     public function add(string $name, Status $status): Zone
     {
-        return DB::transaction(function () use ($name, $status) {
-            return Zone::create([
-                'name' => $name,
-                'status' => $status,
-            ]);
-        });
+        if (!preg_match('/^(?:[a-z0-9](?:[a-z0-9-æøå]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/isu', $name)) {
+            throw new Exception('Name is not a valid domain.');
+        }
+
+        return DB::transaction(fn () => Zone::create([
+            'name' => $name,
+            'status' => $status,
+        ]));
     }
 
     public function update(int $id, array $changes = []): Zone
     {
         foreach ($changes as $name => $value) {
-            if (!in_array($name, ['name', 'status'])) {
-                throw new Exception('Can not edit zone parameter with name: '.$name);
+            switch ($name) {
+                case 'name':
+                    if (!preg_match('/^(?:[a-z0-9](?:[a-z0-9-æøå]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/isu', $value)) {
+                        throw new Exception('Name is not a valid domain.');
+                    }
+                    break;
+                case 'status':
+                    if (!($value instanceof Status)) {
+                        throw new Exception('Status is not a valid status.');
+                    }
+                    break;
+                default:
+                    throw new Exception('Can not edit zone parameter with name: '.$name);
             }
         }
 
